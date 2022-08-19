@@ -20,7 +20,6 @@ resource "aws_instance" "app_server" {
   subnet_id = "subnet-0b2baaeaa3a74d851"
   key_name = "nypl_sa2"
   vpc_security_group_ids = ["${aws_security_group.ec2.id}"]
-  #security_groups = ["${aws_security_group.ec2.id}"]
 
   tags = {
     Name = "ExampleAppServerInstance"
