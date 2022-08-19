@@ -19,7 +19,8 @@ resource "aws_instance" "app_server" {
   instance_type = "t3.micro"
   subnet_id = "subnet-0b2baaeaa3a74d851"
   key_name = "nypl_sa2"
-  security_groups = [ "${aws_security_group.ec2.id}" ]
+  vpc_security_group_ids = ["${aws_security_group.ec2.id}"]
+  #security_groups = ["${aws_security_group.ec2.id}"]
 
   tags = {
     Name = "ExampleAppServerInstance"
