@@ -10,16 +10,16 @@ terraform {
 }
 
 provider "aws" {
-  profile = "default"
+  profile = "nypl-dams-dev"
   region  = "us-east-1"
 }
 
 resource "aws_instance" "app_server" {
   ami           = "ami-040d909ea4e56f8f3"
   instance_type = "t3.micro"
-  #vpc_id = "vpc-d7601abc"
-  #subnet_ids = "subnet-3c6cc956"
-  #keyfile = "nyplsa"
+  subnet_id = "subnet-0b2baaeaa3a74d851"
+  key_name = "nypl_sa2"
+  security_groups = [ "sg-010d23237a17a4fc2" ]
 
   tags = {
     Name = "ExampleAppServerInstance"
