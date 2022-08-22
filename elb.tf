@@ -7,13 +7,6 @@ resource "aws_elb" "elb" {
               "subnet-0071ac6d55c431e43"
   ]
   security_groups = ["${aws_security_group.ec2-elb.id}"]
-  #vpc_id = "vpc-04ac4a3b4e0551328"
- 
- # access_logs {
- #   bucket        = "foo"
- #   bucket_prefix = "bar"
- #   interval      = 60
- # }
 
   listener {
     instance_port     = 80
