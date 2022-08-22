@@ -6,6 +6,7 @@ resource "aws_elb" "elb" {
               "subnet-011400a675d566141",
               "subnet-0071ac6d55c431e43"
   ]
+  source_security_group_id = ["${aws_security_group.ec2-elb.id}"]
   #vpc_id = "vpc-04ac4a3b4e0551328"
  
  # access_logs {
