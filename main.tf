@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "app_server" {
-  ami           = "ami-040d909ea4e56f8f3"
+  ami           = "ami-06a112af5bb8c0acb"
   instance_type = "t3.micro"
   subnet_id = "subnet-0b2baaeaa3a74d851"
   key_name = "nypl_sa2"
