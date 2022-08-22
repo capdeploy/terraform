@@ -1,0 +1,49 @@
+# Create a new load balancer
+resource "aws_elb" "elb" {
+  name               = "test-terraform-elb"
+  #availability_zones = ["us-east-1e"]
+  subnets = [
+              "subnet-011400a675d566141",
+              "subnet-0071ac6d55c431e43"
+  ]
+  #vpc_id = "vpc-04ac4a3b4e0551328"
+ 
+ # access_logs {
+ #   bucket        = "foo"
+ #   bucket_prefix = "bar"
+ #   interval      = 60
+ # }
+
+  listener {
+    instance_port     = 80
+    instance_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
+
+  listener {
+    instance_port      = 80
+    instance_protocol  = "http"
+    lb_port            = 443
+    lb_protocol        = "https"
+    ssl_certificate_id = "arn:aws:acm:us-east-1:685731035297:certificate/db3e055b-2182-4fc7-a735-8e8b1b987bf6"
+  }
+
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 3
+    target              = "HTTP:80/"
+    interval            = 30
+  }
+
+  instances                   = [aws_instance.app_server.id]
+  cross_zone_load_balancing   = true
+  idle_timeout                = 400
+  connection_draining         = true
+  connection_draining_timeout = 400
+
+  tags = {
+    Name = "test-terraform-elb"
+  }
+}
