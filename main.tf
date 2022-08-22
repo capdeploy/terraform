@@ -22,6 +22,7 @@ resource "aws_instance" "app_server" {
   vpc_security_group_ids = ["${aws_security_group.ec2.id}"]
 
   tags = {
-    Name = "Test_VPN_Instance"
+    Name = "nginx_web_server"
+    Project = "TestProject"
   }
 }
