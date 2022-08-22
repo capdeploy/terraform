@@ -1,7 +1,7 @@
 # Create a new load balancer
 resource "aws_elb" "elb" {
   name               = "test-terraform-elb"
-  #availability_zones = ["us-east-1e"]
+  
   subnets = [
               "subnet-011400a675d566141",
               "subnet-0071ac6d55c431e43"
