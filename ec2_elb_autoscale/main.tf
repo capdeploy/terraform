@@ -17,7 +17,7 @@ provider "aws" {
 resource "aws_launch_template" "nginx" {
   name_prefix   = "terraform-nginx-autoscaling"
   image_id      = "ami-06a112af5bb8c0acb"
-  instance_type = "t3.small"
+  instance_type = "t3.micro"
   vpc_security_group_ids = ["${aws_security_group.ec2.id}"]
   key_name = "nypl_sa2"
 
