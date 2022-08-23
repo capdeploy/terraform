@@ -6,6 +6,12 @@ resource "aws_lb_target_group" "instance-tg" {
   vpc_id      = "vpc-04ac4a3b4e0551328"
 }
 
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = aws_lb_target_group.instance-tg.arn
+  target_id        = aws_instance.app_server_alb.id
+  port             = 80
+}
+
 # Create a new load balancer
 resource "aws_alb" "alb" {
   name               = "test-terraform-alb"
