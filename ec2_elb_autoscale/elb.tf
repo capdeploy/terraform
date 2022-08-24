@@ -3,7 +3,7 @@ resource "aws_elb" "elb" {
   name               = "test-terraform-elb-as"
   
   subnets = [
-              "subnet-011400a675d566141",
+              "subnet-08603f724f6417fe5",
               "subnet-0071ac6d55c431e43"
   ]
   security_groups = ["${aws_security_group.ec2-elb.id}"]

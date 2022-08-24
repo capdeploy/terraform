@@ -17,14 +17,14 @@ provider "aws" {
 resource "aws_launch_template" "nginx" {
   name_prefix   = "terraform-nginx-autoscaling"
   image_id      = "ami-06a112af5bb8c0acb"
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
   vpc_security_group_ids = ["${aws_security_group.ec2.id}"]
   key_name = "nypl_sa2"
 
 }
 
 resource "aws_autoscaling_group" "bar" {
-  vpc_zone_identifier       = ["subnet-0b2baaeaa3a74d851", "subnet-012395e7966df0a39"]
+  vpc_zone_identifier       = ["subnet-0b2baaeaa3a74d851", "subnet-079612969c58af055"]
   desired_capacity   = 2
   max_size           = 2
   min_size           = 1

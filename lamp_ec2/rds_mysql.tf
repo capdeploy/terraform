@@ -1,7 +1,7 @@
 resource "aws_db_subnet_group" "default" {
   name       = "main"
   subnet_ids = [
-    "subnet-012395e7966df0a39",
+    "subnet-079612969c58af055",
     "subnet-0b2baaeaa3a74d851"
   ]
 
