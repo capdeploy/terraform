@@ -25,10 +25,9 @@ resource "aws_launch_template" "nginx" {
 
 resource "aws_autoscaling_group" "bar" {
   vpc_zone_identifier       = ["subnet-0b2baaeaa3a74d851", "subnet-079612969c58af055"]
-  desired_capacity   = 2
+  desired_capacity   = 1
   max_size           = 2
   min_size           = 1
-  #load_balancers = ["${aws_elb.elb.id}"]
   target_group_arns = ["${aws_lb_target_group.instance-tg.id}"]
 
   launch_template {
