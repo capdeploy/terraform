@@ -10,21 +10,21 @@ terraform {
 }
 
 provider "aws" {
-  profile = "nypl-dams-dev"
+  profile = var.aws_profile
   region  = "us-east-1"
 }
 
 resource "aws_launch_template" "nginx" {
-  name_prefix   = "terraform-nginx-autoscaling"
-  image_id      = "ami-06a112af5bb8c0acb"
-  instance_type = "t3.micro"
+  name_prefix   = var.launch_template_name
+  image_id      = var.image_id
+  instance_type = var.intance_type
   vpc_security_group_ids = ["${aws_security_group.ec2.id}"]
-  key_name = "nypl_sa2"
+  key_name = var.key_name
 
 }
 
 resource "aws_autoscaling_group" "bar" {
-  vpc_zone_identifier       = ["subnet-0b2baaeaa3a74d851", "subnet-079612969c58af055"]
+  vpc_zone_identifier       = var.vpc_zone_identifier
   desired_capacity   = 1
   max_size           = 2
   min_size           = 1

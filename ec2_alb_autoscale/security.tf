@@ -1,8 +1,8 @@
 resource "aws_security_group" "ec2" {
 
-  name        = "Test Terraform Instances Security Grp for ALB"
+  name        = var.instances_security_group_name
   description = "Allow HTTP HTTPS SSH"
-  vpc_id = "vpc-04ac4a3b4e0551328"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 22
@@ -43,9 +43,9 @@ resource "aws_security_group" "ec2" {
 
 resource "aws_security_group" "ec2-alb" {
 
-  name        = "Test Terraform ALB Security Grp"
+  name        = var.alb_security_group_name
   description = "Allow HTTP HTTPS"
-  vpc_id = "vpc-04ac4a3b4e0551328"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 80
@@ -87,7 +87,7 @@ resource "aws_security_group" "ec2-alb" {
   
  # name        = "Test Terraform RDS Security Grp"
  # description = "Allow MYSQL"
- # vpc_id = "vpc-04ac4a3b4e0551328"
+ # vpc_id = var.vpc_id
 
  # ingress {
  #   from_port   = 3306
