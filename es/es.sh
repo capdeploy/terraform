@@ -92,7 +92,7 @@ network.host: 0.0.0.0
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 #discovery.seed_hosts: ["host1", "host2"]
-discovery.seed_hosts: ["ip-10-227-133-159.ec2.internal", "ip-10-227-135-183.ec2.internal", "ip-10-227-135-29.ec2.internal"]
+discovery.seed_hosts: ["node-1", "node-2", "node-3"]
 #
 # Bootstrap the cluster using an initial set of master-eligible nodes:
 #
