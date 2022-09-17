@@ -30,7 +30,7 @@ variable "ebs_vol_size" {
 
 variable "tag_name" {
   type = string
-  default = "ashok-test-es"
+  default = "ashok-test-es-cluster"
 }
 
 variable "tag_project" {
@@ -40,7 +40,7 @@ variable "tag_project" {
 
 variable "tag_role" {
   type = string
-  default = "DEVOPS-ES2"
+  default = "ashok-test-es-cluster"
 }
 
 variable "ec2_security_group" {
