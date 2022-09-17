@@ -20,7 +20,7 @@ variable "ec2_ami" {
 
 variable "ec2_instance_type" {
   type = string
-  default = "t3.small"
+  default = "t3.medium"
 }
 
 variable "ebs_vol_size" {
@@ -40,7 +40,7 @@ variable "tag_project" {
 
 variable "tag_role" {
   type = string
-  default = "DEVOPS-ES"
+  default = "bjr-test-es-cluster"
 }
 
 variable "ec2_security_group" {
