@@ -65,5 +65,5 @@ variable "tag_role_sc" {
 
 variable "ec2_security_group" {
   type = string
-  default = "NYPL Solr9 Test"
+  default = "NYPL Solr9 Test SC"
 }
