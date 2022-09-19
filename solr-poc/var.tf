@@ -18,9 +18,14 @@ variable "ec2_ami" {
   default = "ami-09a41e26df464c548"
 }
 
-variable "ec2_instance_type" {
+variable "ec2_instance_type_zk" {
   type = string
   default = "t3.small"
+}
+
+variable "ec2_instance_type_sc" {
+  type = string
+  default = "t3.medium"
 }
 
 variable "ebs_vol_size_zk" {
@@ -33,9 +38,14 @@ variable "ebs_vol_size_sc" {
   default = "120"
 }
 
-variable "tag_name" {
+variable "tag_name_zk" {
   type = string
-  default = "brett-test-solr-cluster"
+  default = "bjr-test-solr-zk"
+}
+
+variable "tag_name_sc" {
+  type = string
+  default = "bjr-test-solr-sc"
 }
 
 variable "tag_project" {
