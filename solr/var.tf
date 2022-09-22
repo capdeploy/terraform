@@ -67,3 +67,13 @@ variable "ec2_security_group" {
   type = string
   default = "NYPL Solr9 Test"
 }
+
+variable "elb_security_group" {
+  type = string
+  default = "SC Terraform ELB"
+}
+
+variable "elb_name" {
+  type = string
+  default = "test-solr8"
+}
