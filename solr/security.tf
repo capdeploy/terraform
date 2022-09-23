@@ -26,13 +26,6 @@ resource "aws_security_group" "ec2" {
   }
 
     ingress {
-    from_port   = 8983
-    to_port     = 8983
-    protocol    = "tcp"
-    source = ["${aws_security_group.ec2-elb.id}"]
-  }
-
-    ingress {
     from_port   = 2888
     to_port     = 2888
     protocol    = "tcp"
@@ -82,7 +75,7 @@ resource "aws_security_group" "ec2-elb" {
     cidr_blocks = ["10.0.0.0/8"]
   }
 
-      ingress {
+    ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
