@@ -9,25 +9,25 @@ resource "aws_elb" "elb" {
   security_groups = ["${aws_security_group.ec2-elb.id}"]
 
   listener {
-    instance_port     = 80
+    instance_port     = 8983
     instance_protocol = "http"
     lb_port           = 80
     lb_protocol       = "http"
   }
 
   listener {
-    instance_port      = 80
+    instance_port      = 8983
     instance_protocol  = "http"
     lb_port            = 443
     lb_protocol        = "https"
-    ssl_certificate_id = "arn:aws:acm:us-east-1:685731035297:certificate/db3e055b-2182-4fc7-a735-8e8b1b987bf6"
+    ssl_certificate_id = var.acm_ssl
   }
 
   health_check {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 3
-    target              = "HTTP:8983/solr"
+    target              = "HTTP:8983/solr/#/"
     interval            = 30
   }
 

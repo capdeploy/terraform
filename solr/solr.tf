@@ -20,7 +20,7 @@ resource "aws_instance" "sc_server1" {
 resource "aws_instance" "sc_server2" {
   ami           = var.ec2_ami
   instance_type = var.ec2_instance_type_sc
-  subnet_id = "subnet-0b2baaeaa3a74d851"
+  subnet_id = "subnet-079612969c58af055"
   key_name = var.key_name
   vpc_security_group_ids = ["${aws_security_group.ec2.id}"]
 
