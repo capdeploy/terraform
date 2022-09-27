@@ -56,6 +56,6 @@ resource "aws_instance" "rmq_server3" {
     Name = var.tag_name
     Project = var.tag_project
     Role = var.tag_role
-    RMQID = "2"
+    RMQID = "3"
   }
 }
