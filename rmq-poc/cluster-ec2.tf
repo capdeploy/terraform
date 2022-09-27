@@ -14,6 +14,7 @@ resource "aws_instance" "rmq_server1" {
     Name = var.tag_name
     Project = var.tag_project
     Role = var.tag_role
+    RMQID = "1"
   }
 }
 
@@ -34,6 +35,7 @@ resource "aws_instance" "rmq_server2" {
     Name = var.tag_name
     Project = var.tag_project
     Role = var.tag_role
+    RMQID = "2"
   }
 }
 
@@ -54,5 +56,6 @@ resource "aws_instance" "rmq_server3" {
     Name = var.tag_name
     Project = var.tag_project
     Role = var.tag_role
+    RMQID = "2"
   }
 }
