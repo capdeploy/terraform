@@ -15,7 +15,7 @@ variable "aws_profile" {
 
 variable "ec2_ami" {
   type = string
-  default = "ami-09a41e26df464c548"
+  default = "ami-019ade5247094b192"
 }
 
 variable "ec2_instance_type" {
