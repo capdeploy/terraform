@@ -30,7 +30,7 @@ variable "ebs_vol_size" {
 
 variable "tag_name" {
   type = string
-  default = "brett-test-es"
+  default = "bjr-test-es-cluster"
 }
 
 variable "tag_project" {
