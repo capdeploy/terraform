@@ -30,7 +30,7 @@ variable "ebs_vol_size" {
 
 variable "tag_name" {
   type = string
-  default = "bjr-test-es-cluster_8"
+  default = "bjr-test-es-cluster"
 }
 
 variable "tag_project" {
@@ -40,10 +40,10 @@ variable "tag_project" {
 
 variable "tag_role" {
   type = string
-  default = "bjr-test-es-cluster_8"
+  default = "bjr-test-es-cluster"
 }
 
 variable "ec2_security_group" {
   type = string
-  default = "test terraform ES grp_8"
+  default = "test terraform ES grp"
 }
