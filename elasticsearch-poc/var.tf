@@ -20,7 +20,7 @@ variable "ec2_ami" {
 
 variable "ec2_instance_type" {
   type = string
-  default = "t3.medium"
+  default = "t3.large"
 }
 
 variable "ebs_vol_size" {
