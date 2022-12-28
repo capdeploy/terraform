@@ -14,7 +14,7 @@ resource "aws_instance" "es_server1" {
     Name = var.tag_name
     Project = var.tag_project
     Role = var.tag_role
-    InstanceID = 1
+    InstanceID = 4
   }
 }
 
@@ -35,7 +35,7 @@ resource "aws_instance" "es_server2" {
     Name = var.tag_name
     Project = var.tag_project
     Role = var.tag_role
-    InstanceID = 2
+    InstanceID = 5
   }
 }
 
@@ -56,6 +56,6 @@ resource "aws_instance" "es_server3" {
     Name = var.tag_name
     Project = var.tag_project
     Role = var.tag_role
-    InstanceID = 3
+    InstanceID = 6
   }
 }
