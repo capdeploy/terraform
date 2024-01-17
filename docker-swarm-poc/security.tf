@@ -65,6 +65,13 @@ resource "aws_security_group" "ec2" {
     cidr_blocks = ["10.0.0.0/8"]
   }
 
+  ingress {
+    from_port   = 8001
+    to_port     = 8001
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0

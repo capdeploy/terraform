@@ -15,7 +15,7 @@ variable "aws_profile" {
 
 variable "ec2_ami" {
   type = string
-  default = "ami-058bd2d568351da34"
+  default = "ami-08d522b64ff954242"
 }
 
 variable "ec2_instance_type" {
@@ -40,7 +40,7 @@ variable "tag_project" {
 
 variable "tag_role" {
   type = string
-  default = "bjr-test-es-cluster"
+  default = "bjr-test-k8-cluster"
 }
 
 variable "ec2_security_group" {

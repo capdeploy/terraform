@@ -32,6 +32,12 @@ resource "aws_security_group" "ec2" {
     cidr_blocks = ["10.0.0.0/8"]
   }
 
+   ingress {
+    from_port   = 8443
+    to_port     = 8443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/8"]
+  }
     ingress {
     from_port   = 2379
     to_port     = 2380
@@ -63,6 +69,12 @@ resource "aws_security_group" "ec2" {
     ingress {
     from_port   = 5601
     to_port     = 5601
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+  ingress {
+    from_port   = 8001
+    to_port     = 8001
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
