@@ -1,0 +1,135 @@
+hostnamectl set-hostname "k8s-master"
+hostnamectl set-hostname "k8s-worker01"
+hostnamectl set-hostname "k8s-worker02"
+
+apt-get install net-tools -y && systemctl stop apparmor && systemctl disable apparmor && systemctl restart containerd && systemctl enable containerd
+
+
+vi /etc/hosts
+
+10.225.135.199	k8s-master
+10.225.133.109	k8s-worker01
+10.225.134.105	k8s-worker02
+
+vi kubelet.yaml
+
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+kubernetesVersion: "1.28.0" # Replace with your desired version
+controlPlaneEndpoint: "k8s-master"
+---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+
+kubeadm init --config kubelet.yaml
+
+--output--
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+You can now join any number of control-plane nodes by copying certificate authorities
+and service account keys on each node and then running the following as root:
+
+  kubeadm join k8s-master:6443 --token j7sy7x.qe3dqb831yh90ka5 \
+	--discovery-token-ca-cert-hash sha256:6d6a8e73381f5e817ce0f71e0550038365da012760eacddacb43d40e23449ec8 \
+	--control-plane
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join k8s-master:6443 --token j7sy7x.qe3dqb831yh90ka5 \
+	--discovery-token-ca-cert-hash sha256:6d6a8e73381f5e817ce0f71e0550038365da012760eacddacb43d40e23449ec8
+
+-restart cmds--
+
+export KUBECONFIG=/etc/kubernetes/admin.conf
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+
+kubectl get nodes
+kubectl cluster-info
+
+--on workers--
+kubeadm join k8s-master:6443 --token j7sy7x.qe3dqb831yh90ka5 \
+	--discovery-token-ca-cert-hash sha256:6d6a8e73381f5e817ce0f71e0550038365da012760eacddacb43d40e23449ec8
+
+--on master
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+kubectl get pods -n kube-system
+
+--install gui--
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm repo list
+
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+
+export POD_NAME=$(kubectl get pods -n kubernetes-dashboard -l "app.kubernetes.io/name=kubernetes-dashboard,app.kubernetes.io/instance=kubernetes-dashboard" -o jsonpath="{.items[0].metadata.name}")
+kubectl -n kubernetes-dashboard port-forward --address 0.0.0.0 $POD_NAME 8443:8443 &
+
+--generate admin token--
+vi k8s-dashboard-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kube-system
+
+--run--
+kubectl create -f k8s-dashboard-account.yaml
+kubectl -n kube-system create token admin-user
+
+--output--
+eyJhbGciOiJSUzI1NiIsImtpZCI6Ikl0aVFUTTI3TF9MNnZRTTR6YnFoM3VaUFRaQTVOQWxIeHpCeTFGeUF4YlEifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzA1NTA3MjEyLCJpYXQiOjE3MDU1MDM2MTIsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiY2Q4MDIzM2YtNWMwMi00YjZmLTkzYjUtMzdlYWFhZWVlOTY0In19LCJuYmYiOjE3MDU1MDM2MTIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.EHXDPh3cMU5ymi5dJ2cbvvxG46F9STJQIxSAu0QOyHtPUUxlpTS5Zr68qiTCdZ8HFtkHIhrJpW4x9VOXm_2h6xXLVG82m1-hZRfzuf-twy8wEDW357zH7dSBN9AsoYy3zL2emQBRCFs5nosuPnq--lx5MPRHtKGdm_koPaJFZ0-faWKAp6pVvTmN5BEUf3VX4xghNqYXYBfeJkvt4vMmpdrSDsIhEWx9YrSKCmfxU5mmemUT1fR7u3pYo_VpqvC5HER96h4jcUn9-NpN0gOKH_0UwuDygrM71hUZHwmMF014wdv4V8OzskCaSah-M8JVxdmhtDp147EZi7AFpiOPJw
+
+--install docker--
+apt-get update
+apt-get install ca-certificates curl gnupg -y
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+  apt-get update && apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+--deploy pod
+kubectl create deployment stereo-app --image=b1971be4d9a9 --replicas 2
+kubectl expose deployment stereo-app --name=stereo-web-svc --type NodePort --port 80 --target-port 80
+kubectl describe svc stereo-web-svc
+
+--deploy--
+kubectl rollout restart -n default deployment stereo-app

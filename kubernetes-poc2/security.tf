@@ -11,49 +11,57 @@ resource "aws_security_group" "ec2" {
     cidr_blocks = ["10.0.0.0/8"]
   }
 
-  ingress {
+    ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
 
-  ingress {
+    ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
 
-    ingress {
-    from_port   = 9200
-    to_port     = 9200
+   ingress {
+    from_port   = 6443
+    to_port     = 6443
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
 
-    ingress {
-    from_port   = 9300
-    to_port     = 9300
+   ingress {
+    from_port   = 8443
+    to_port     = 8443
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
     ingress {
-    from_port   = 9243
-    to_port     = 9243
+    from_port   = 2379
+    to_port     = 2380
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+
+   ingress {
+    from_port   = 10250
+    to_port     = 10252
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
 
   ingress {
-    from_port   = 9443
-    to_port     = 9443
+    from_port   = 10259
+    to_port     = 10259
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
+
   ingress {
-    from_port   = 9400
-    to_port     = 9400
+    from_port   = 10257
+    to_port     = 10257
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
@@ -64,39 +72,12 @@ resource "aws_security_group" "ec2" {
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
-    ingress {
-    from_port   = 2377
-    to_port     = 2377
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
-
   ingress {
     from_port   = 8001
     to_port     = 8001
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/8"]
   }
-
-    ingress {
-    from_port   = 9001
-    to_port     = 9001
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
-    ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
-    ingress {
-    from_port   = 888
-    to_port     = 888
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
